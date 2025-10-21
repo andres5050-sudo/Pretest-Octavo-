@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Pretest Operaciones Matemáticas - Grado Octavo</title>
+    <style>
+        body {
+            font-family: 'Orbitron', 'Arial', sans-serif;
+            background: linear-gradient(135deg, #0a0a2a, #1a1a4a);
+            color: #e0e0ff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 90%;
+            padding: 40px;
+            background: rgba(15, 15, 40, 0.9);
+            border-radius: 20px;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.5), 0 0 60px rgba(255, 165, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+            border: 2px solid #ffd700;
+        }
+
+        .neon-title {
+            text-align: center;
+            font-size: 2.8em;
+            color: #ff4500;
+            text-shadow: 0 0 15px #ff4500, 0 0 30px #ffd700;
+            margin-bottom: 30px;
+            animation: neonPulse 2s infinite alternate;
+        }
+
+        @keyframes neonPulse {
+            from { text-shadow: 0 0 10px #ff4500, 0 0 20px #ffd700; }
+            to { text-shadow: 0 0 20px #ff4500, 0 0 40px #ffd700; }
+        }
+
+        .subtitle {
+            text-align: center;
+            font-size: 1.3em;
+            color: #d3d3d3;
+            margin-bottom: 40px;
+            text-shadow: 0 0 5px #ffd700;
+        }
+
+        .form-group {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(20, 20, 50, 0.7);
+            border-radius: 15px;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
+            position: relative;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #e0e0ff;
+            font-weight: 600;
+            text-shadow: 0 0 3px #ffd700;
+        }
+
+        input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ffd700;
+            border-radius: 10px;
+            background: rgba(30, 30, 60, 0.5);
+            color: #e0e0ff;
+            font-size: 1.1em;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        input[type="text"]:focus, input[type="number"]:focus {
+            border-color: #ff4500;
+            box-shadow: 0 0 15px #ff4500;
+            outline: none;
+        }
+
+        .question-page {
+            display: none;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(20, 20, 50, 0.7);
+            border-radius: 15px;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
+            position: relative;
+        }
+
+        .question-page.active {
+            display: block;
+        }
+
+        .question h3 {
+            font-size: 1.6em;
+            color: #ffd700;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px #ffa500;
+            white-space: nowrap;
+            overflow-x: auto;
+        }
+
+        .fraction {
+            display: inline-block;
+            text-align: center;
+            vertical-align: middle;
+            margin: 0 0.2em;
+        }
+
+        .fraction .numerator {
+            display: block;
+            border-bottom: 1px solid #e0e0ff;
+            font-size: 0.8em;
+        }
+
+        .fraction .denominator {
+            display: block;
+            font-size: 0.8em;
+        }
+
+        .options label {
+            display: block;
+            margin: 15px 0;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: transform 0.3s, color 0.3s;
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .options label:hover {
+            color: #ff4500;
+            transform: scale(1.05);
+        }
+
+        input[type="radio"] {
+            accent-color: #ff4500;
+            margin-right: 10px;
+            transform: scale(1.2);
+            transition: transform 0.3s;
+        }
+
+        input[type="radio"]:checked + span {
+            animation: bounce 0.5s;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .next-btn {
+            display: none;
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #ff4500, #ffd700);
+            border: none;
+            border-radius: 10px;
+            color: #ffffff;
+            font-size: 1.3em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-shadow: 0 0 5px #ffffff;
+            margin-top: 20px;
+            animation: pulseButton 1.5s infinite;
+        }
+
+        @keyframes pulseButton {
+            0% { transform: scale(1); box-shadow: 0 0 10px #ff4500; }
+            50% { transform: scale(1.05); box-shadow: 0 0 20px #ffd700; }
+            100% { transform: scale(1); box-shadow: 0 0 10px #ff4500; }
+        }
+
+        .next-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 40px #ff4500, 0 0 80px #ffd700;
+        }
+
+        .start-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #ffd700, #ff4500);
+            border: none;
+            border-radius: 10px;
+            color: #ffffff;
+            font-size: 1.3em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-shadow: 0 0 5px #ffffff;
+            animation: pulseButton 1.5s infinite;
+        }
+
+        .start-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 40px #ffd700, 0 0 80px #ff4500;
+        }
+
+        #result {
+            margin-top: 40px;
+            padding: 25px;
+            background: rgba(20, 20, 50, 0.9);
+            border-radius: 15px;
+            text-align: center;
+            display: none;
+            animation: fadeIn 1s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        #result h2 {
+            color: #ffd700;
+            font-size: 2.2em;
+            text-shadow: 0 0 15px #ffa500;
+        }
+
+        #result p {
+            font-size: 1.3em;
+            color: #d3d3d3;
+            margin: 10px 0;
+        }
+
+        /* Animación de estrellas y símbolos matemáticos */
+        .star-effect {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background: #ff4500;
+            border-radius: 50%;
+            animation: fall 3s linear infinite;
+        }
+
+        .math-symbol {
+            position: absolute;
+            font-size: 1.5em;
+            color: #ffd700;
+            opacity: 0.8;
+            animation: fall 4s linear infinite;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-100vh); opacity: 1; }
+            100% { transform: translateY(100vh); opacity: 0; }
+        }
+
+        .instructions {
+            display: none;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(20, 20, 50, 0.7);
+            border-radius: 15px;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
+            text-align: center;
+            color: #e0e0ff;
+            font-size: 1.2em;
+            text-shadow: 0 0 5px #ffd700;
+        }
+
+        .instructions.active {
+            display: block;
+        }
+        
+        .screenshot-instruction {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(255, 255, 0, 0.1); /* Fondo amarillo suave para destacar */
+            border: 2px dashed #ffd700;
+            border-radius: 10px;
+            color: #fff;
+            font-size: 1.1em;
+            font-weight: 600;
+        }
+
+        .email-submit-btn {
+            margin-top: 20px;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #ffd700, #ff4500);
+            border: none;
+            border-radius: 10px;
+            color: #ffffff;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-shadow: 0 0 5px #ffffff;
+        }
+
+        .email-submit-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px #ffd700;
+        }
+
+        #thank-you-message {
+            display: none;
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(0, 255, 0, 0.2);
+            border: 2px solid #00ff00;
+            border-radius: 15px;
+            text-align: center;
+            animation: fadeIn 1s;
+        }
+
+        #thank-you-message h3 {
+            color: #00ff00;
+            font-size: 2em;
+            text-shadow: 0 0 10px #00ff00;
+            margin-bottom: 10px;
+        }
+
+        #thank-you-message p {
+            color: #e0e0ff;
+            font-size: 1.2em;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1 class="neon-title">Pretest Operaciones Matemáticas</h1>
+        <p class="subtitle">Grado Octavo: Enteros y Fracciones - Calcula cada operación en una hoja y elige la respuesta correcta.</p>
+
+        <div id="info-form">
+            <div class="form-group">
+                <label for="name">Nombre:</label>
+                <input type="text" id="name" required placeholder="Escribe tu nombre">
+            </div>
+            <div class="form-group">
+                <label for="course">Curso:</label>
+                <input type="text" id="course" required placeholder="Ej: 8-01">
+            </div>
+            <div class="form-group">
+                <label for="age">Edad:</label>
+                <input type="number" id="age" required placeholder="Ej: 13">
+            </div>
+            <div class="form-group">
+                <label for="school">Colegio:</label>
+                <input type="text" id="school" required placeholder="Nombre del colegio">
+            </div>
+            <button class="start-btn" onclick="startQuiz()">¡Ver Instrucciones!</button>
+        </div>
+
+        <div id="instructions" class="instructions">
+            <h3>Instrucciones para la Prueba</h3>
+            <p>Bienvenido/a a tu pretest de operaciones matemáticas. Aquí encontrarás:</p>
+            <ul>
+                <li>25 preguntas sobre enteros y fracciones.</li>
+                <li>Debes calcular cada operación en una hoja y seleccionar la respuesta correcta (a, b, c o d).</li>
+                <li>Usa el botón "Siguiente Pregunta ➡️" para avanzar.</li>
+                <li>Al finalizar, presiona "Enviar Respuestas 🚀" para ver tu calificación.</li>
+                <li>¡Tómate tu tiempo y asegúrate de responder todo!</li>
+            </ul>
+            <button class="start-btn" onclick="showFirstQuestion()">¡Empezar Ahora!</button>
+        </div>
+
+        <div id="quiz-container" style="display: none;">
+            <div id="q1" class="question-page">
+                <div class="question">
+                    <h3>Calcula: 5 + (-3)</h3>
+                    <div class="options">
+                        <label><input type="radio" name="q1" value="a" onclick="showNextButton(1)"><span>a) 8</span></label>
+                        <label><input type="radio" name="q1" value="b" onclick="showNextButton(1)"><span>b) 2</span></label>
+                        <label><input type="radio" name="q1" value="c" onclick="showNextButton(1)"><span>c) -2</span></label>
+                        <label><input type="radio" name="q1" value="d" onclick="showNextButton(1)"><span>d) -8</span></label>
+                    </div>
+                </div>
+                <button id="next-1" class="next-btn" onclick="nextQuestion(1)">Siguiente Pregunta ➡️</button>
+            </div>
+
+            <div id="q2" class="question-page">
+                <div class="question">
+                    <h3>Calcula: -7 - 4</h3>
+                    <div class="options">
+                        <label><input type="radio" name="q2" value="a" onclick="showNextButton(2)"><span>a) -3</span></label>
+                        <label><input type="radio" name="q2" value="b" onclick="showNextButton(2)"><span>b) 3</span></label>
+                        <label><input type="radio" name="q2" value="c" onclick="showNextButton(2)"><span>c) -11</span></label>
+                        <label><input type="radio" name="q2" value="d" onclick="showNextButton(2)"><span>d) 11</span></label>
+                    </div>
+                </div>
+                <button id="next-2" class="next-btn" onclick="nextQuestion(2)">Siguiente Pregunta ➡️</button>
+            </div>
+
+            <div id="q3" class="question-page">
+                <div class="question">
+                    <h3>Calcula: (-4) × 5</h3>
+                    <div class="options">
+                        <label><input type="radio" name="q3" value="a" onclick="showNextButton(3)"><span>a) 20</span></label>
+                        <label><input type="radio" name="q3" value="b" onclick="showNextButton(3)"><span>b) -20</span></label>
+                        <label><input type="radio" name="q3" value="c" onclick="showNextButton(3)"><span>c) 9</span></label>
+                        <label><input type="radio" name="q3" value="d" onclick="showNextButton(3)"><span>d) -9</span></label>
+                    </div>
+                </div>
+                <button id="next-3" class="next-btn" onclick="nextQuestion(3)">Siguiente Pregunta ➡️</button>
+            </div>
+
+            <div id="q4" class="question-page">
+                <div class="question">
+                    <h3>Calcula: -24 ÷ 6</h3>
+                    <div class="options">
+                        <label><input type="radio" name="q4" value="a" onclick="showNextButton(4)"><span>a) 4</span></label>
+                        <label><input type="radio" name="q4" value="b" onclick="showNextButton(4)"><span>b) -4</span></label>
+                        <label><input type="radio" name="q4" value="c" onclick="showNextButton(4)"><span>c) 30</span></label>
+                        <label><input type="radio" name="q4" value="d" onclick="showNextButton(4)"><span>d) -30</span></label>
+                    </div>
+                </div>
+                <button id="next-4" class="next-btn" onclick="nextQuestion(4)">Siguiente Pregunta ➡️</button>
+            </div>
+
+            <div id="q5" class="question-page">
+                <div class="question">
+                    <h3>Calcula: 10 - (4 × 2)</h3>
+                    <div class="options">
+                        <label><input type="radio" name="q5" value="a" onclick="showNextButton(5)"><span>a) 2</span></label>
+                        <label><input type="radio" name="q5" value="b" onclick="showNextButton(5)"><span>b) 18</span></label>
+                        <label><input type="radio" name="q5" value="c" onclick="showNextButton(5)"><span>c) 6</span></label>
+                        <label><input type="radio" name="q5" value="d" onclick="showNextButton(5)"><span>d) 12</span></label>
+                    </div>
+                </div>
+                <button id="next-5" class="next-btn" onclick="nextQuestion(5)">Siguiente Pregunta ➡️</button>
+            </div>
+
+            <div id="q6" class="question-page">
+                <div class="question">
+                    <h3>Calcula: -15 + [8 × (-2) + 5]</h3>
+                    <div class="options">
+                        <label><input type="radio" name="q6" value="a" onclick="showNextButton(6)"><span>a) -26</span></label>
+                        <label><input type="radio" name="q6" value="b" onclick="showNextButton(6)"><span>b) -11</span></label>
+                        <label><input type="radio" name="q6" value="c" onclick="showNextButton(6)"><span>c) 1</span></label>
+                        <label><input type="radio" name="q6" value="d" onclick="showNextButton(6)"><span>d) -1</span></label>
+                    </div>
+                </div>
+                <button id="next-6" class="next-btn" onclick="nextQuestion(6)">Siguiente Pregunta ➡️</button>
+            </div>
+
+            <div id="q7" class="question-page">
+                <div class="question">
+                    <h3>Calcula: -29 + [5 - [15 + 7 × (3 - 6) + (-3 - 5)]]</h3>
+                    <div class="options">
+                        <label><input type="radio" name="q7" value="a" onclick="showNextButton(7)"><span>a) -50</span></label>
+                        <label><input type="radio" name="q7" value="b" onclick="showNextButton(7)"><span>b) -10</span></label>
+                        <label><input type="radio" name="q7" value="c" onclick="showNextButton(7)"><span>c) -21</span></label>
+                        <label><input type="radio" name="q7" value="d" onclick="showNextButton(7)"><span>d) -15</span></label>
+                    </div>
+                </div>
+                <button id="next-7" class="next-btn" onclick="nextQuestion(7)">Siguiente Pregunta ➡️</button>
+            </div>
+
+            <div id="q8" class="question-page">
+                <div class="question">
+                    <h3>Calcula: {[(-30 + 3) + 8] × (-12)} ÷ [-(5 + 9 - 10)]</h3>
+                    <div class="options">
+                        <label><input type="radio" name="q8" value="a" onclick="showNextButton(8)"><span>a) 228</span></label>
+                        <label><input type="radio" name="q8" value="b" onclick="showNextButton(8)"><span>b) -228</span></label>
+                        <label><input type="radio" name="q8" value="c" onclick="showNextButton(8)"><span>c) 57</span></label>
+                        <label><input type="radio" name="q8" value="d" onclick="showNextButton(8)"><span>d) -57</span></label>
+                    </div>
+                </div>
+                <button id="next-8" class="next-btn" onclick="nextQuestion(8)">Siguiente Pregunta ➡️</button>
+            </div>
+
+            <div id="q9" class="question-page">
+                <div class="question">
+                    <h3>Calcula: <span class="fraction"><span class="numerator">1</span><span class="denominator">3</span></span> + <span class="fraction"><span class="numerator">1</span><span class="denominator">6</span></span></h3>
+                    <div class="options">
+                        <label><input type="radio" name="q9" value="a" onclick="showNextButton(9)"><span>a) <span class="fraction"><span class="numerator">2</span><span class="denominator">9</span></span></span></label>
+                        <label><input type="radio" name="q9" value="b" onclick="showNextButton(9)"><span>b) <span class="fraction"><span class="numerator">1</span><span class="denominator">2</span></span></span></label>
+                        <label><input type="radio" name="q9" value="c" onclick="showNextButton(9)"><span>c) <span class="fraction"><span class="numerator">3</span><span class="denominator">6</span></span></span></label>
+                        <label><input type="radio" name="q9" value="d" onclick="showNextButton(9)"><span>d) <span class="fraction"><span class="numerator">1</span><span class="denominator">9</span></span></span></label>
+                    </div>
+                </div>
+                <button id="next-9" class="next-btn" onclick="nextQuestion(9)">Siguiente Pregunta ➡️</button>
+            </div>
+
+            <div id="q10" class="question-page">
+                <div class="question">
+                    <h3>Calcula: <span class="fraction"><span class="numerator">5</span><span class="denominator">8</span></span> - <span class="fraction"><span class="numerator">1</span><span class="denominator">8</span></span></h3>
+                    <div class="options">
+                        <label><input type="radio" name="q10" value="a" onclick="showNextButton(10)"><span>a) <span class="fraction"><span class="numerator">4</span><span class="denominator">8</span></span></span></label>
+                        <label><input type="radio" name="q10" value="b" onclick="showNextButton(10)"><span>b) <span class="fraction"><span class="numerator">6</span><span class="denominator">8</span></span></span></label>
+                        <label><input type="radio" name="q10" value="c" onclick="showNextButton(10)"><span>c) <span class="fraction"><span class="numerator">1</span><span class="denominator">2</span></span></span></label>
+                        <label><input type="radio" name="q10" value="d" onclick="showNextButton(10)"><span>d) 0</span></label>
+                    </div>
+                </div>
+                <button id="next-10" class="next-btn" onclick="nextQuestion(10)">Siguiente Pregunta ➡️</button>
+            </div>
+
+            <div id="q11" class="question-page">
+                <div class="question">
+                    <h3>Calcula: <span class="fraction"><span class="numerator">2</span><span class="denominator">5</span></span> × <span class="fraction"><span class="numerator">3</span><span class="denominator">4</span></span></h3>
+                    <div class="options">
+                        <label><input type="radio" name="q11" value="a" onclick="showNextButton(11)"><span>a) <span class="fraction"><span class="numerator">6</span><span class="denominator">20</span></span></span></label>
+                        <label><input type="radio" name="q11" value="b" onclick="showNextButton(11)"><span>b) <span class="fraction"><span class="numerator">3</span><span class="denominator">10</span></span></span></label>
+                        <label><input type="radio" name="q11" value="c" onclick="showNextButton(11)"><span>c) <span class="fraction"><span class="numerator">5</span><span class="denominator">9</span></span></span></label>
+                        <label><input type="radio" name="q11" value="d" onclick="showNextButton(11)"><span>d) <span class="fraction"><span class="numerator">1</span><span class="denominator">2</span></span></span></label>
+                    </div>
+                </div>
+                <button id="next-11" class="next-btn" onclick="nextQuestion(11)">Siguiente Pregunta ➡️</button>
+            </div>
+
+            <div id="q12" class="question-page">
+                <div class="question">
+                    <h3>Calcula: <span class="fraction"><span class="numerator">3</span><span class="denominator">7</span></span> ÷ <span class="fraction"><span class="numerator">1</span><span class="denominator">2</span></span></h3>
+                    <div class="options">
+                        <label><input type="radio" name="q12" value="a" onclick="showNextButton(12)"><span>a) <span class="fraction"><span class="numerator">6</span><span class="denominator">7</span></span></span></label>
+                        <label><input type="radio" name="q12" value="b" onclick="showNextButton(12)"><span>b) <span class="fraction"><span class="numerator">3</span><span class="denominator">14</span></span></span></label>
+                        <label><input type="radio" name="q12" value="c" onclick="showNextButton(12)"><span>c) <span class="fraction"><span class="numerator">3</span><span class="denominator">2</span></span></span></label>
+                        <label><input type="radio" name="q12" value="d" onclick="showNextButton(12)"><span>d) <span class="fraction"><span class="numerator">1</span><span class="denominator">2</span></span></span></label>
+                    </div>
+                </div>
+                <button id="next-12" class="next-btn" onclick="nextQuestion(12)">Siguiente Pregunta ➡️</button>
+            </div>
+
+            <div id="q13" class="question-page">
+                <div class="question">
+                    <h3>Calcula (usa MCM): <span class="fraction"><span class="numerator">1</span><span class="denominator">4</span></span> + <span class="fraction"><span class="numerator">1</span><span class="denominator">6</span></span> + <span class="fraction"><span class="numerator">1</span><span class="denominator">12</span></span></h3>
+                    <div class="options">
+                        <label><input type="radio" name="q13" value="a" onclick="showNextButton(13)"><span>a) <span class="fraction"><span class="numerator">1</span><span class="denominator">2</span></span></span></label>
+                        <label><input type="radio" name="q13" value="b" onclick="showNextButton(13)"><span>b) <span class="fraction"><span class="numerator">3</span><span class="denominator">12</span></span></span></label>
+                        <label><input type="radio" name="q13" value="c" onclick="showNextButton(13)"><span>c) <span class="fraction"><span class="numerator">5</span><span class="denominator">12</span></span></span></label>
+                        <label><input type="radio" name="q13" value="d" onclick="showNextButton(13)"><span>d) <span class="fraction"><span class="numerator">7</span><span class="denominator">12</span></span></span></label>
+                    </div>
+                </div>
+                <button id="next-13" class="next-btn" onclick="nextQuestion(13)">Siguiente Pregunta ➡️</button>
+            </div>
+
+            <div id="q14" class="question-page">
+                <div class="question">
+                    <h3>Calcula (usa MCM): <span class="fraction"><span class="numerator">7</span><span class="denominator">10</span></span> - <span class="fraction"><span class="numerator">1</span><span class="denominator">5</span></span> - <span class="fraction"><span class="numerator">1</span><span class="denominator">2</span></span></h3>
+                    <div class="options">
+                        <label><input type="radio" name="q14" value="a" onclick="showNextButton(14)"><span>a) 0</span></label>
+                        <label><input type="radio" name="q14" value="b" onclick="showNextButton(14)"><span>b) -<span class="fraction"><span class="numerator">1</span><span class="denominator">10</span></span></span></label>
+                        <label><input type="radio" name="q14" value="c" onclick="showNextButton(14)"><span>c) <span class="fraction"><span class="numerator">1</span><span class="denominator">10</span></span></span></label>
+                        <label><input type="radio" name="q14" value="d" onclick="showNextButton(14)"><span>d) <span class="fraction"><span class="numerator">3</span><span class="denominator">10</span></span></span></label>
+                    </div>
+                </div>
+                <button id="next-14" class="next-btn" onclick="nextQuestion(14)">Siguiente Pregunta ➡️</button>
+            </div>
+
+            <div id="q15" class="question-page">
+                <div class="question">
+                    <h3>Calcula: (<span class="fraction"><span class="numerator">3</span><span class="denominator">4</span></span> + <span class="fraction"><span class="numerator">1</span><span class="denominator">2</span></span>) × (<span class="fraction"><span class="numerator">2</span><span class="denominator">3</span></span> - <span class="fraction"><span class="numerator">1</span><span class="denominator">6</span></span>)</h3>
+                    <div class="options">
+                        <label><input type="radio" name="q15" value="a" onclick="showNextButton(15)"><span>a) <span class="fraction"><span class="numerator">5</span><span class="denominator">4</span></span></span></label>
+                        <label><input type="radio" name="q15" value="b" onclick="showNextButton(15)"><span>b) <span class="fraction"><span class="numerator">15</span><span class="denominator">12</span></span></span></label>
+                        <label><input type="radio" name="q15" value="c" onclick="showNextButton(15)"><span>c) <span class="fraction"><span class="numerator">5</span><span class="denominator">6</span></span></span></label>
+                        <label><input type="radio" name="q15" value="d" onclick="showNextButton(15)"><span>d) 1</span></label>
+                    </div>
+                </div>
+                <button id="next-15" class="next-btn" onclick="nextQuestion(15)">Siguiente Pregunta ➡️</button>
+            </div>
+
+            <div id="q16" class="question-page">
+                <div class="question">
+                    <h3>Calcula (usa MCM): <span class="fraction"><span class="numerator">4</span><span class="denominator">5</span></span> ÷ [<span class="fraction"><span class="numerator">1</span><span class="denominator">2</span></span> + <span class="fraction"><span class="numerator">1</span><span class="denominator">10</span></span>]</h3>
+                    <div class="options">
+                        <label><input type="radio" name="q16" value="a" onclick="showNextButton(16)"><span>a) <span class="fraction"><span class="numerator">4</span><span class="denominator">3</span></span></span></label>
+                        <label><input type="radio" name="q16" value="b" onclick="showNextButton(16)"><span>b) <span class="fraction"><span class="numerator">8</span><span class="denominator">6</span></span></span></label>
+                        <label><input type="radio" name="q16" value="c" onclick="showNextButton(16)"><span>c) <span class="fraction"><span class="numerator">8</span><span class="denominator">3</span></span></span></label>
+                        <label><input type="radio" name="q16" value="d" onclick="showNextButton(16)"><span>d) <span class="fraction"><span class="numerator">4</span><span class="denominator">6</span></span></span></label>
+                    </div>
+                </div>
+                <button id="next-16" class="next-btn" onclick="nextQuestion(16)">Siguiente Pregunta ➡️</button>
+            </div>
+
+            <div id="q17" class="question-page">
+                <div class="question">
+                    <h3>Calcula: -8 × [3 - (-2)] + 10 ÷ 5</h3>
+                    <div class="options">
+                        <label><input type="radio" name="q17" value="a" onclick="showNextButton(17)"><span>a) -48</span></label>
+                        <label><input type="radio" name="q17" value="b" onclick="showNextButton(17)"><span>b) -38</span></label>
+                        <label><input type="radio" name="q17" value="c" onclick="showNextButton(17)"><span>c) -40</span></label>
+                        <label><input type="radio" name="q17" value="d" onclick="showNextButton(17)"><span>d) 2</span></label>
+                    </div>
+                </div>
+                <button id="next-17" class="next-btn" onclick="nextQuestion(17)">Siguiente Pregunta ➡️</button>
+            </div>
+
+            <div id="q18" class="question-page">
+                <div class="question">
+                    <h3>Calcula: [ -12 + 4 × (-3) ] ÷ 2 - (-6)</h3>
+                    <div class="options">
+                        <label><input type="radio" name="q18" value="a" onclick="showNextButton(18)"><span>a) -6</span></label>
+                        <label><input type="radio" name="q18" value="b" onclick="showNextButton(18)"><span>b) 0</span></label>
+                        <label><input type="radio" name="q18" value="c" onclick="showNextButton(18)"><span>c) -18</span></label>
+                        <label><input type="radio" name="q18" value="d" onclick="showNextButton(18)"><span>d) -12</span></label>
+                    </div>
+                </div>
+                <button id="next-18" class="next-btn" onclick="nextQuestion(18)">Siguiente Pregunta ➡️</button>
+            </div>
+
+            <div id="q19" class="question-page">
+                <div class="question">
+                    <h3>Calcula (usa MCM): <span class="fraction"><span class="numerator">2</span><span class="denominator">3</span></span> + <span class="fraction"><span class="numerator">3</span><span class="denominator">4</span></span> - <span class="fraction"><span class="numerator">1</span><span class="denominator">6</span></span> + <span class="fraction"><span class="numerator">1</span><span class="denominator">12</span></span></h3>
+                    <div class="options">
+                        <label><input type="radio" name="q19" value="a" onclick="showNextButton(19)"><span>a) 1 <span class="fraction"><span class="numerator">1</span><span class="denominator">4</span></span></span></label>
+                        <label><input type="radio" name="q19" value="b" onclick="showNextButton(19)"><span>b) 1 <span class="fraction"><span class="numerator">1</span><span class="denominator">3</span></span></span></label>
+                        <label><input type="radio" name="q19" value="c" onclick="showNextButton(19)"><span>c) 1 <span class="fraction"><span class="numerator">1</span><span class="denominator">6</span></span></span></label>
+                        <label><input type="radio" name="q19" value="d" onclick="showNextButton(19)"><span>d) 1</span></label>
+                    </div>
+                </div>
+                <button id="next-19" class="next-btn" onclick="nextQuestion(19)">Siguiente Pregunta ➡️</button>
+            </div>
+
+            <div id="q20" class="question-page">
+                <div class="question">
+                    <h3>Calcula (usa MCM si es necesario): (<span class="fraction"><span class="numerator">5</span><span class="denominator">6</span></span> × <span class="fraction"><span class="numerator">2</span><span class="denominator">5</span></span>) - (<span class="fraction"><span class="numerator">1</span><span class="denominator">3</span></span> ÷ <span class="fraction"><span class="numerator">3</span><span class="denominator">4</span></span>)</h3>
+                    <div class="options">
+                        <label><input type="radio" name="q20" value="a" onclick="showNextButton(20)"><span>a) <span class="fraction"><span class="numerator">1</span><span class="denominator">3</span></span></span></label>
+                        <label><input type="radio" name="q20" value="b" onclick="showNextButton(20)"><span>b) -<span class="fraction"><span class="numerator">1</span><span class="denominator">15</span></span></span></label>
+                        <label><input type="radio" name="q20" value="c" onclick="showNextButton(20)"><span>c) <span class="fraction"><span class="numerator">1</span><span class="denominator">15</span></span></span></label>
+                        <label><input type="radio" name="q20" value="d" onclick="showNextButton(20)"><span>d) -<span class="fraction"><span class="numerator">1</span><span class="denominator">3</span></span></span></label>
+                    </div>
+                </div>
+                <button id="next-20" class="next-btn" onclick="nextQuestion(20)">Siguiente Pregunta ➡️</button>
+            </div>
+
+            <div id="q21" class="question-page">
+                <div class="question">
+                    <h3>Calcula: -6 × (-3) + 10</h3>
+                    <div class="options">
+                        <label><input type="radio" name="q21" value="a" onclick="showNextButton(21)"><span>a) -28</span></label>
+                        <label><input type="radio" name="q21" value="b" onclick="showNextButton(21)"><span>b) 18</span></label>
+                        <label><input type="radio" name="q21" value="c" onclick="showNextButton(21)"><span>c) -8</span></label>
+                        <label><input type="radio" name="q21" value="d" onclick="showNextButton(21)"><span>d) 28</span></label>
+                    </div>
+                </div>
+                <button id="next-21" class="next-btn" onclick="nextQuestion(21)">Siguiente Pregunta ➡️</button>
+            </div>
+
+            <div id="q22" class="question-page">
+                <div class="question">
+                    <h3>Calcula: <span class="fraction"><span class="numerator">2</span><span class="denominator">9</span></span> + <span class="fraction"><span class="numerator">1</span><span class="denominator">3</span></span> (usa MCM)</h3>
+                    <div class="options">
+                        <label><input type="radio" name="q22" value="a" onclick="showNextButton(22)"><span>a) <span class="fraction"><span class="numerator">5</span><span class="denominator">9</span></span></span></label>
+                        <label><input type="radio" name="q22" value="b" onclick="showNextButton(22)"><span>b) <span class="fraction"><span class="numerator">1</span><span class="denominator">2</span></span></span></label>
+                        <label><input type="radio" name="q22" value="c" onclick="showNextButton(22)"><span>c) <span class="fraction"><span class="numerator">3</span><span class="denominator">9</span></span></span></label>
+                        <label><input type="radio" name="q22" value="d" onclick="showNextButton(22)"><span>d) <span class="fraction"><span class="numerator">7</span><span class="denominator">9</span></span></span></label>
+                    </div>
+                </div>
+                <button id="next-22" class="next-btn" onclick="nextQuestion(22)">Siguiente Pregunta ➡️</button>
+            </div>
+
+            <div id="q23" class="question-page">
+                <div class="question">
+                    <h3>Calcula: (-5) × [2 + (-4)]</h3>
+                    <div class="options">
+                        <label><input type="radio" name="q23" value="a" onclick="showNextButton(23)"><span>a) -30</span></label>
+                        <label><input type="radio" name="q23" value="b" onclick="showNextButton(23)"><span>b) 10</span></label>
+                        <label><input type="radio" name="q23" value="c" onclick="showNextButton(23)"><span>c) -10</span></label>
+                        <label><input type="radio" name="q23" value="d" onclick="showNextButton(23)"><span>d) 30</span></label>
+                    </div>
+                </div>
+                <button id="next-23" class="next-btn" onclick="nextQuestion(23)">Siguiente Pregunta ➡️</button>
+            </div>
+
+            <div id="q24" class="question-page">
+                <div class="question">
+                    <h3>Calcula: {[-14 + 6 × (2 - 4)] + 8} ÷ [- (3 + 2)]</h3>
+                    <div class="options">
+                        <label><input type="radio" name="q24" value="a" onclick="showNextButton(24)"><span>a) -4</span></label>
+                        <label><input type="radio" name="q24" value="b" onclick="showNextButton(24)"><span>b) 4</span></label>
+                        <label><input type="radio" name="q24" value="c" onclick="showNextButton(24)"><span>c) -2</span></label>
+                        <label><input type="radio" name="q24" value="d" onclick="showNextButton(24)"><span>d) 2</span></label>
+                    </div>
+                </div>
+                <button id="next-24" class="next-btn" onclick="nextQuestion(24)">Siguiente Pregunta ➡️</button>
+            </div>
+
+            <div id="q25" class="question-page">
+                <div class="question">
+                    <h3>Calcula: [(-9 + 4) × 2] ÷ (-5)</h3>
+                    <div class="options">
+                        <label><input type="radio" name="q25" value="a" onclick="showNextButton(25)"><span>a) -2</span></label>
+                        <label><input type="radio" name="q25" value="b" onclick="showNextButton(25)"><span>b) 2</span></label>
+                        <label><input type="radio" name="q25" value="c" onclick="showNextButton(25)"><span>c) -10</span></label>
+                        <label><input type="radio" name="q25" value="d" onclick="showNextButton(25)"><span>d) 10</span></label>
+                    </div>
+                </div>
+                <button id="next-25" class="next-btn" onclick="nextQuestion(25)">Enviar Respuestas 🚀</button>
+            </div>
+        </div>
+
+       <div id="result" style="display:none;">
+             <h2>Resultados del Pretest</h2>
+             <p id="student-info"></p>
+             <p id="score"></p>
+             
+             <div class="screenshot-instruction">
+                 ⚠️ **INSTRUCCIÓN IMPORTANTE:** Por favor, toma un **pantallazo** (captura de pantalla) de esta ventana de resultados **ANTES** de hacer clic en el botón de abajo. Adjunta el pantallazo al correo.
+             </div>
+
+             <form id="mailto-form" action="mailto:andres.5050@hotmail.com" method="post" enctype="text/plain" target="_blank">
+                 <input type="hidden" name="Nombre" id="form-name" />
+                 <input type="hidden" name="Curso" id="form-course" />
+                 <input type="hidden" name="Edad" id="form-age" />
+                 <input type="hidden" name="Colegio" id="form-school" />
+                 <input type="hidden" name="Calificación" id="form-score" />
+                 <input type="hidden" name="Nota Importante:" value="Adjunto el pantallazo de mis resultados como evidencia." />
+                 <button type="submit" id="submit-email-btn" class="email-submit-btn" onclick="showThankYouMessage()">Enviar Resultados por Correo 📧</button>
+             </form>
+
+             <div id="thank-you-message" style="display: none;">
+                 <h3>¡Gracias! 🎉</h3>
+                 <p>Se abrirá tu programa de correo. **Recuerda adjuntar el pantallazo** antes de enviar.</p>
+             </div>
+        </div>
+
+    </div>
+
+    <script>
+        let studentData = {};
+
+        function createParticle() {
+            const particle = document.createElement('div');
+            const isStar = Math.random() > 0.5;
+            particle.className = isStar ? 'star-effect' : 'math-symbol';
+            particle.style.left = Math.random() * 100 + 'vw';
+            particle.style.animationDuration = Math.random() * 3 + 2 + 's';
+            particle.style.animationDelay = Math.random() * 2 + 's';
+            if (!isStar) {
+                const symbols = ['+', '-', '×', '÷', '=', '∞', '∑', 'π'];
+                particle.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+            }
+            document.body.appendChild(particle);
+            setTimeout(() => particle.remove(), 5000);
+        }
+        setInterval(createParticle, 300);
+
+        let currentQuestion = 1;
+        const totalQuestions = 25;
+        const answers = {};
+
+        function startQuiz() {
+            const name = document.getElementById('name').value.trim();
+            const course = document.getElementById('course').value.trim();
+            const age = document.getElementById('age').value.trim();
+            const school = document.getElementById('school').value.trim();
+
+            if (name && course && age && school) {
+                document.getElementById('info-form').style.display = 'none';
+                document.getElementById('instructions').classList.add('active');
+            } else {
+                alert('Por favor, completa todos los campos.');
+            }
+        }
+
+        function showFirstQuestion() {
+            document.getElementById('instructions').classList.remove('active');
+            document.getElementById('quiz-container').style.display = 'block';
+            document.getElementById('q1').classList.add('active');
+        }
+
+        function showNextButton(qNum) {
+            document.getElementById(`next-${qNum}`).style.display = 'block';
+        }
+
+        function nextQuestion(qNum) {
+            const selected = document.querySelector(`input[name="q${qNum}"]:checked`);
+            if (selected) {
+                answers[`q${qNum}`] = selected.value;
+            }
+
+            document.getElementById(`q${qNum}`).classList.remove('active');
+
+            if (qNum < totalQuestions) {
+                currentQuestion = qNum + 1;
+                document.getElementById(`q${currentQuestion}`).classList.add('active');
+            } else {
+                calculateScore();
+            }
+        }
+
+        function calculateScore() {
+            const correctAnswers = {
+                q1: 'b',  // 2
+                q2: 'c',  // -11
+                q3: 'b',  // -20
+                q4: 'b',  // -4
+                q5: 'a',  // 2
+                q6: 'a',  // -26
+                q7: 'b',  // -10
+                q8: 'd',  // -57
+                q9: 'b',  // 1/2
+                q10: 'a', // 4/8
+                q11: 'a', // 6/20
+                q12: 'a', // 6/7
+                q13: 'a', // 1/2
+                q14: 'a', // 0
+                q15: 'c', // 5/6
+                q16: 'a', // 4/3
+                q17: 'b', // -38
+                q18: 'a', // -6
+                q19: 'b', // 1 1/3
+                q20: 'b', // -1/15
+                q21: 'd', // 28
+                q22: 'a', // 5/9
+                q23: 'b', // 10
+                q24: 'b', // 4
+                q25: 'b'  // 2
+            };
+
+            let score = 0;
+            for (let i = 1; i <= totalQuestions; i++) {
+                if (answers[`q${i}`] === correctAnswers[`q${i}`]) {
+                    score++;
+                }
+            }
+            
+            const name = document.getElementById('name').value;
+            const course = document.getElementById('course').value;
+            const age = document.getElementById('age').value;
+            const school = document.getElementById('school').value;
+            const scoreText = `${score} / ${totalQuestions}`; 
+
+            // Rellenar los campos ocultos para el mailto
+            document.getElementById("form-name").value = name;
+            document.getElementById("form-course").value = course;
+            document.getElementById("form-age").value = age;
+            document.getElementById("form-school").value = school;
+            document.getElementById("form-score").value = scoreText;
+            
+            // Mostrar los resultados en pantalla
+            document.getElementById('student-info').innerHTML = `Nombre: ${name}<br>Curso: ${course}<br>Edad: ${age}<br>Colegio: ${school}`;
+            document.getElementById('score').innerText = `Calificación: ${scoreText}`;
+
+            document.getElementById('quiz-container').style.display = 'none';
+            document.getElementById('result').style.display = 'block';
+        }
+        
+        function showThankYouMessage() {
+             // Oculta el botón para evitar doble clic mientras se abre el cliente de correo
+             document.getElementById("submit-email-btn").style.display = 'none'; 
+             // Muestra la instrucción final
+             document.getElementById("thank-you-message").style.display = "block";
+             // El navegador abrirá el cliente de correo debido al action="mailto:..." del formulario
+        }
+
+    </script>
+</body>
+</html>
